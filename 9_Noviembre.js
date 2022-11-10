@@ -2,11 +2,13 @@
 
 
 const keys = (objeto) => {
-    let cadena = "";
+    let array = [];
     for(const llave in objeto) { 
-        cadena = cadena + llave + ", "
+        if(typeof (objeto[llave])!='function'){
+            array.push(llave);
+        }
     }
-    return cadena;
+    return array;
 }
 
 
