@@ -2,8 +2,8 @@
 
 const unica = (array) => {
     let resultado = [];
-    for( const key in array){
-        if( ! resultado.includes( array[key] ) ) resultado.push(array[key]);
+    for( const elemento of array){
+        if( ! resultado.includes( elemento ) ) resultado.push(elemento);
     }
     return resultado;
 }
