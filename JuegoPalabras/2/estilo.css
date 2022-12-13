@@ -1,7 +1,7 @@
 .contenedor{
     height: 95vh;
     width: 98vw;
-    background-color: #e84b2c;
+    background-color: white;
 
     display: flex;
     justify-content: center;
@@ -9,13 +9,10 @@
 }
     form{
         padding: 30px;
-        background-color: #e6d839;
+        background-color: lightgray;
         display: flex;
         flex-direction: column;
         align-items: center;
         line-height: 3vh;
+        gap: 10px;
     }
-        #contenedorPalabra{
-            background-color: #7cd164;
-            padding: 30px;
-        }
