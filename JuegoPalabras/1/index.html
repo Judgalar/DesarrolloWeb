@@ -68,7 +68,6 @@
                 }
             }
 
-
         let acertadas = 0;
         let letra = "";
         let listaPalabras = [];
@@ -81,13 +80,10 @@
 
         letra = letraAleatoria();
       
-
         document.getElementById('letra').innerHTML = "<h3>Escribe una letra que empiece por: " + letra +"</h3>";
-
 
         function comprobarPalabras(palabraBusqueda) {
 
-               
             if ( palabraBusqueda[0] === letra || palabraBusqueda[0] === letra.toLowerCase() ) //si la primera letra de la palabra es igual a la letra aleatoria
             {
                 acertadas++;
@@ -96,13 +92,9 @@
                 document.getElementById('letra').innerHTML = "<h3>Escribe una letra que empiece por: " + letra +"</h3>";
                 totalTime = 10;
             }
-            
         }
         
         
-        
-
-
         document.getElementById("formulario").addEventListener("submit", (evento) =>//esto se ejcuta cada vez que se envia la informacion
          {
            evento.preventDefault();
@@ -110,8 +102,6 @@
             let palabraBusqueda = document.getElementById("mensaje").value;//metemos la palabra en una variable
             comprobarPalabras(palabraBusqueda);
             document.getElementById("mensaje").value="";//borramos la palabra
-            
-    
         });
 
     </script>
