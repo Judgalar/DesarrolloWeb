@@ -72,7 +72,7 @@ function comprobarPalabras(palabraBusqueda) {
 }
 
 
-document.getElementById("formulario").addEventListener("submit", (evento) =>//esto se ejcuta cada vez que se envia la informacion
+document.getElementById("formulario").addEventListener("submit", (evento) =>//Se ejcuta cada vez que se envia el input
  {
    evento.preventDefault();
     console.log(evento);
