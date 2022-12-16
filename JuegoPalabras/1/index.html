@@ -54,16 +54,16 @@
             let totalTime = 10;
             function updateClock() {
                 document.getElementById('countdown').innerHTML = totalTime;
-                
-                if(totalTime>0){
-                    totalTime-=1;
-                    setTimeout("updateClock()",1000);
-                }
 
                 if(totalTime == 0){
                     document.getElementById('formulario').innerHTML = "<h1 id='derrota'>Se acabó</h1>";
                     document.getElementById('puntos').innerHTML = "Puntuación: " + acertadas;
                     document.getElementById('listaPalabras').innerHTML = "Lista de palabras: " + listaPalabras;
+                }
+                
+                if(totalTime>0){
+                    totalTime-=1;
+                    setTimeout("updateClock()",1000);
                 }
             }
 
