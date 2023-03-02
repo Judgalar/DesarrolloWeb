@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <title>Gallery</title>
+  <link rel="stylesheet" href="gallery.css">
+  <meta charset="utf-8">
+  <style>
+    body {
+        margin: 0;
+        padding: 0;
+        font: 75%/120% sans-serif;
+    }
+
+    #largeImg {
+        border: solid 1px #ccc;
+        width: 550px;
+        height: 400px;
+        padding: 5px;
+    }
+
+    #thumbs a {
+        border: solid 1px #ccc;
+        width: 100px;
+        height: 100px;
+        padding: 3px;
+        margin: 2px;
+        float: left;
+    }
+
+    #thumbs a:hover {
+        border-color: #FF9900;
+    }
+
+    #thumbs li {
+        list-style: none;
+    }
+
+    #thumbs {
+        margin: 0;
+        padding: 0;
+    }
+  </style>
+</head>
+
+<body>
+
+  <p><img id="largeImg" src="https://es.js.cx/gallery/img1-lg.jpg" alt="Imagen grande"></p>
+
+  <ul id="thumbs">
+    <!-- el navegadort tiene un pequeño tooltip incorporado que "on hover" muestra el texto del atributo "title" -->
+    <li>
+      <a href="https://es.js.cx/gallery/img2-lg.jpg" title="Imagen 2"><img src="https://es.js.cx/gallery/img2-thumb.jpg"></a>
+    </li>
+    <li>
+      <a href="https://es.js.cx/gallery/img3-lg.jpg" title="Imagen 3"><img src="https://es.js.cx/gallery/img3-thumb.jpg"></a>
+    </li>
+    <li>
+      <a href="https://es.js.cx/gallery/img4-lg.jpg" title="Imagen 4"><img src="https://es.js.cx/gallery/img4-thumb.jpg"></a>
+    </li>
+    <li>
+      <a href="https://es.js.cx/gallery/img5-lg.jpg" title="Imagen 5"><img src="https://es.js.cx/gallery/img5-thumb.jpg"></a>
+    </li>
+    <li>
+      <a href="https://es.js.cx/gallery/img6-lg.jpg" title="Imagen 6"><img src="https://es.js.cx/gallery/img6-thumb.jpg"></a>
+    </li>
+  </ul>
+
+<script src="script.js"></script>
+</body>
+</html>

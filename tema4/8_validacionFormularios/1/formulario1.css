@@ -1,0 +1,16 @@
+input:required:invalid {
+  border-color: red;
+}
+  
+input:required:valid {
+  border-color: green;
+}
+
+input:focus:invalid {
+  outline-color: red;
+}
+
+input:focus:valid {
+  outline-color: green;
+}
+  
