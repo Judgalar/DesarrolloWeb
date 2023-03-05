@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Secuencia de imágenes</title>
+	<script>
+		// array con las imágenes
+		var imagenes = [
+			"https://www.tooltyp.com/wp-content/uploads/2014/10/1900x920-8-beneficios-de-usar-imagenes-en-nuestros-sitios-web.jpg",
+			"https://i.blogs.es/ceda9c/dalle/450_1000.jpg",
+			"https://images.unsplash.com/photo-1601625463687-25541fb72f62?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8Mnx8fGVufDB8fHx8&w=1000&q=80",
+			"https://cdn.shopify.com/s/files/1/0229/0839/files/bancos_de_imagenes_gratis.jpg?v=1630420628"
+		];
+
+		// Contador para llevar la cuenta de la imagen actual
+		var contador = 0;
+
+		// Función para cambiar la imagen en la página
+		function cambiarImagen() {
+			var imagen = document.getElementById("imagen");
+			imagen.src = imagenes[contador];
+			contador++;
+			if (contador >= imagenes.length) {
+				contador = 0;
+			}
+		}
+
+		document.addEventListener("click", cambiarImagen);
+	</script>
+</head>
+<body>
+	<img id="imagen" src="imagen1.jpg">
+</body>
+</html>

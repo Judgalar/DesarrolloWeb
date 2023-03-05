@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Test de siete preguntas</title>
+    <style>
+      .correcto {
+        color: green;
+      }
+      .incorrecto {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Test de siete preguntas</h1>
+    <form>
+      <p>
+        <label>
+          1. JavaScript es un lenguaje de programación interpretado.
+          <br>
+          <input type="radio" name="p1" value="verdadero"> Verdadero
+          <input type="radio" name="p1" value="falso"> Falso
+        </label>
+      </p>
+      <p>
+        <label>
+          2. El operador ternario en JavaScript se escribe con los símbolos ?:.
+          <br>
+          <input type="radio" name="p2" value="verdadero"> Verdadero
+          <input type="radio" name="p2" value="falso"> Falso
+        </label>
+      </p>
+      <p>
+        <label>
+          3. En JavaScript, la función Math.random() devuelve un número aleatorio entre 0 (inclusive) y 1 (exclusivo).
+          <br>
+          <input type="radio" name="p3" value="verdadero"> Verdadero
+          <input type="radio" name="p3" value="falso"> Falso
+        </label>
+      </p>
+      <p>
+        <label>
+          4. La sentencia break se usa para salir de un bucle en JavaScript.
+          <br>
+          <input type="radio" name="p4" value="verdadero"> Verdadero
+          <input type="radio" name="p4" value="falso"> Falso
+        </label>
+      </p>
+      <p>
+        <label>
+          5. En JavaScript, las variables definidas con const no pueden ser reasignadas.
+          <br>
+          <input type="radio" name="p5" value="verdadero"> Verdadero
+          <input type="radio" name="p5" value="falso"> Falso
+        </label>
+      </p>
+      <p>
+        <label>
+          6. El método push() se utiliza para añadir elementos al principio de un array en JavaScript.
+          <br>
+          <input type="radio" name="p6" value="verdadero"> Verdadero
+          <input type="radio" name="p6" value="falso"> Falso
+        </label>
+      </p>
+      <p>
+        <label>
+          7. El método map() devuelve un nuevo array con los elementos modificados según la función proporcionada.
+          <br>
+          <input type="radio" name="p7" value="verdadero"> Verdadero
+          <input type="radio" name="p7" value="falso"> Falso
+        </label>
+      </p>
+      <button type="button" onclick="comprobar()">Comprobar respuestas</button>
+    </form>
+    <script>
+        function comprobar() {
+            const respuestas = {
+                p1: 'verdadero',
+                p2: 'verdadero',
+                p3: 'verdadero',
+                p4: 'verdadero',
+                p5: 'verdadero',
+                p6: 'falso',
+                p7: 'verdadero'
+            };
+            let aciertos = 0;
+    
+            for (const pregunta in respuestas) {
+            const seleccionado = document.querySelector(`input[name="${pregunta}"]:checked`);
+            if (seleccionado && seleccionado.value === respuestas[pregunta]) {
+                aciertos++;
+                seleccionado.parentNode.classList.add('correcto');
+                seleccionado.parentNode.classList.remove('incorrecto');
+            } else if (seleccionado) {
+                seleccionado.parentNode.classList.add('incorrecto');
+                seleccionado.parentNode.classList.remove('correcto');
+            }
+            }
+            
+            alert(`Has acertado ${aciertos} de 7 preguntas.`);
+        }
+</script>
+
+
