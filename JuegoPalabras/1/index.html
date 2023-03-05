@@ -5,104 +5,29 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- CSS only -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-    <!-- JavaScript Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
-        crossorigin="anonymous"></script>
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <link rel="stylesheet" href="estilo.css">
     <title>Palabras 1</title>
 
 </head>
 
 <body>
-    
-    <div class="container my-5 text-center">
-        <div class="row gx-5">
-            <div class="col">
-                <div class="p-3 border bg-light">
+    <span class="bg-light" id="tiempo"></span>
+    <div class="container bg-light contenedor">
+        <form class="form-label" id="formulario">
+            <div id="letra"></div>
+            <input type="text" id="mensaje">
+            <br><br>
+            <button class="btn btn-dark" type="button">Aceptar</button>
+            <br> <br>
+        </form>
 
-                    <span id="countdown"></span>
-
-                    <form class="form-label" id="formulario">
-
-                        <div id="letra"></div>
-                        <input type="text" value="" id="mensaje">
-                        <br><br>
-                        <button class="btn btn-dark" type="submit">Enviar palabra</button>
-                        <br> <br>
-                   
-                    </form>
-
-                    <div id="puntos"></div>
-                    <div id="listaPalabras"></div>
-
-                </div>
-            </div>
-        </div>
+        <div id="puntos"></div>
     </div>
+    <ul id="listaPalabras">
+        <h3>Lista de palabras</h3>
+    </ul>
 
-    <script>
-
-        'use strict'
-
-        // CUENTA ATRÁS
-            window.onload = updateClock;
-            let totalTime = 10;
-            function updateClock() {
-                document.getElementById('countdown').innerHTML = totalTime;
-
-                if(totalTime == 0){
-                    document.getElementById('formulario').innerHTML = "<h1 id='derrota'>Se acabó</h1>";
-                    document.getElementById('puntos').innerHTML = "Puntuación: " + acertadas;
-                    document.getElementById('listaPalabras').innerHTML = "Lista de palabras: " + listaPalabras;
-                }
-                
-                if(totalTime>0){
-                    totalTime-=1;
-                    setTimeout("updateClock()",1000);
-                }
-            }
-
-        let acertadas = 0;
-        let letra = "";
-        let listaPalabras = [];
-       
-        function letraAleatoria() {
-            const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-            letra =  caracteres.charAt(Math.floor(Math.random() * caracteres.length));
-            return letra;
-        }
-
-        letra = letraAleatoria();
-      
-        document.getElementById('letra').innerHTML = "<h3>Escribe una letra que empiece por: " + letra +"</h3>";
-
-        function comprobarPalabras(palabraBusqueda) {
-
-            if ( palabraBusqueda[0] === letra || palabraBusqueda[0] === letra.toLowerCase() ) //si la primera letra de la palabra es igual a la letra aleatoria
-            {
-                acertadas++;
-                listaPalabras.push(palabraBusqueda);
-                letra = letraAleatoria();
-                document.getElementById('letra').innerHTML = "<h3>Escribe una letra que empiece por: " + letra +"</h3>";
-                totalTime = 10;
-            }
-        }
-        
-        
-        document.getElementById("formulario").addEventListener("submit", (evento) =>//esto se ejcuta cada vez que se envia la informacion
-         {
-           evento.preventDefault();
-            console.log(evento);
-            let palabraBusqueda = document.getElementById("mensaje").value;//metemos la palabra en una variable
-            comprobarPalabras(palabraBusqueda);
-            document.getElementById("mensaje").value="";//borramos la palabra
-        });
-
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>

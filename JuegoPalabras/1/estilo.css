@@ -1,4 +1,33 @@
-#countdown{
+body,html{
+    width: 100%;
+    height: 100%;
+}
+body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+.contenedor{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 50px;
+}
+form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+#listaPalabras{
+    display: none;
+    flex-direction: column;
+}
+#tiempo{
+    padding: 50px;
     color: blue;
     font-size: 50px;
 }
