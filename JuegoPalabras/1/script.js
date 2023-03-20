@@ -6,9 +6,7 @@ const tiempoRestante = setInterval(()=>{
         document.getElementById('formulario').innerHTML = "<h1 id='derrota'>Se acabó</h1>";
         document.getElementById('puntos').innerHTML = "Puntuación: " + acertadas;
         document.getElementById('listaPalabras').style = 'display: flex';
-        listaPalabras.forEach(element=>{
-            document.getElementById('listaPalabras').innerHTML += '<li>'+element+'</li>';
-        })
+        listaPalabras.forEach( element =>{ document.getElementById('listaPalabras').innerHTML += '<li>'+element+'</li>'; })
         clearTimeout(tiempoRestante);
     }
     if(tiempo <= 5) document.getElementById('tiempo').style = 'color: goldenrod;'
@@ -30,23 +28,35 @@ function comprobarPalabras(palabraBusqueda) {
         letra = letraAleatoria();
         document.getElementById('letra').innerHTML = "<h3>Escribe una palabra que empiece por: " + letra +"</h3>";
         tiempo = 10;
+        document.getElementById('tiempo').style = 'color: blue;'
+        document.getElementById('tiempo').innerHTML = tiempo;
     }
     else    mensaje.style = 'border-color: red';
 }
 
-let tiempo = 10;
+function empezar(){
+    tiempo = 10;
+    document.getElementById('tiempo').innerHTML = tiempo;
+    juego.style.display = 'flex';
+    btnEmpezar.style.display = 'none';
+    letra = letraAleatoria();
+
+    document.getElementById('letra').innerHTML = "<h3>Escribe una letra que empiece por: " + letra +"</h3>";
+
+    document.getElementById("formulario").addEventListener("submit", (event) => {
+        event.preventDefault();
+        let palabraBusqueda = document.getElementById("mensaje").value;
+        comprobarPalabras(palabraBusqueda);
+        document.getElementById("mensaje").value="";
+    });
+
+}
+
+let tiempo;
 let acertadas = 0;
 let listaPalabras = [];
 let letra = '';
-letra = letraAleatoria();
+const juego = document.getElementById('juego');
+const btnEmpezar = document.getElementById('empezar');
 
-document.getElementById('letra').innerHTML = "<h3>Escribe una letra que empiece por: " + letra +"</h3>";
-
-document.getElementById("formulario").addEventListener("submit", (event) => {
-    event.preventDefault();
-    let palabraBusqueda = document.getElementById("mensaje").value;
-    comprobarPalabras(palabraBusqueda);
-    document.getElementById("mensaje").value="";
-});
-
-tiempoRestante();
+btnEmpezar.addEventListener('click',empezar);

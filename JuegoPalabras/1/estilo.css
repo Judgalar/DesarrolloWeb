@@ -6,6 +6,7 @@ body{
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     gap: 20px;
 }
 .contenedor{
@@ -15,13 +16,24 @@ body{
     align-items: center;
     padding: 50px;
 }
-form{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-}
+    #empezar{
+        padding: 50;
+    }
+    #juego{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 50px;
+        gap: 20px;
+    }
+        form{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
 #listaPalabras{
     display: none;
     flex-direction: column;

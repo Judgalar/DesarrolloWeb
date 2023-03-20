@@ -12,21 +12,26 @@
 </head>
 
 <body>
-    <span class="bg-light" id="tiempo"></span>
-    <div class="container bg-light contenedor">
-        <form class="form-label" id="formulario">
-            <div id="letra"></div>
-            <input type="text" class="form-control" id="mensaje">
-            <br><br>
-            <button class="btn btn-dark" type="button">Aceptar</button>
-            <br> <br>
-        </form>
-
-        <div id="puntos"></div>
+    <div class="contenedor">
+        <button class="btn btn-success" id="empezar" >Empezar</button>
+        <div id="juego" style="display: none;">
+            <span class="bg-light rounded-circle w-40 text-center" id="tiempo"></span>
+            <div class="container bg-light contenedor rounded">
+                <form class="form-label" id="formulario">
+                    <div id="letra"></div>
+                    <input type="text" class="form-control" id="mensaje">
+                    <br><br>
+                    <button class="btn btn-dark" type="submit">Aceptar</button>
+                    <br> <br>
+                </form>
+    
+                <div id="puntos"></div>
+            </div>
+            <ul id="listaPalabras">
+                <h3>Lista de palabras</h3>
+            </ul>
+        </div>
     </div>
-    <ul id="listaPalabras">
-        <h3>Lista de palabras</h3>
-    </ul>
 
     <script src="script.js"></script>
 </body>
