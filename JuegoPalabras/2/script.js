@@ -5,82 +5,38 @@ import {diccionario} from "https://cdn.jsdelivr.net/gh/fran-dawbaza/spanish-dict
 //
 function eliminarDiacriticosEs(texto) {
     return texto
-           .normalize('NFD')
-           .replace(/([^n\u0300-\u036f]|n(?!\u0303(?![\u0300-\u036f])))[\u0300-\u036f]+/gi,"$1")
-           .normalize();
+        .normalize('NFD')
+        .replace(/([^n\u0300-\u036f]|n(?!\u0303(?![\u0300-\u036f])))[\u0300-\u036f]+/gi,"$1")
+        .normalize();
 }
-
-const diccionarioSinTildes = diccionario.map(eliminarDiacriticosEs);
-
-const diccionarioSet = new Set(diccionarioSinTildes);
-
-diccionarioSet.has('palabra'); // Devolverá true si 'palabra' está en el diccionarioSet, eficiencia O(1)
-
-let puntos = 0;
-let letra = "";
-let listaPalabras = [];
-
-
-//CRONOMETRO
-let totalTime = 10;
-function updateClock() {
-    document.getElementById('countdown').innerHTML = totalTime;
-    
-    if(totalTime === 0){
-        document.getElementById('formulario').innerHTML = "<h1 id='derrota'>Se acabó</h1>";
-        document.getElementById('puntos').innerHTML = "Puntuación: " + puntos;
-        document.getElementById('listaPalabras').innerHTML = "Lista de palabras: " + listaPalabras;
-        document.getElementById('reiniciar').innerHTML = "<btn type='button' class='btn btn-warning' onclick=location.reload() >Reiniciar</btn>"
-    }
-    
-    if(totalTime>0){
-        totalTime-=1;
-        setTimeout(updateClock,1000);
-    }
-}
-window.onload = updateClock();
-
 
 function letraAleatoria() {
-    const caracteres = 'abcdefghijklmnopqrstuvwxyz'; 
+    const caracteres = 'abcdefghijklmnopqrstuvwxyz';
     letra =  caracteres.charAt(Math.floor(Math.random() * caracteres.length));
     return letra;
 }
 
-letra = letraAleatoria();
-
-document.getElementById('letra').innerHTML = "<h3>Escribe una letra que empiece por: " + letra +"</h3>";
-
 function comprobarPalabras(palabraBusqueda) {
-
     if ( palabraBusqueda[0] === letra ) //si la primera letra de la palabra es igual a la letra aleatoria
     {
-        if( listaPalabras.includes(palabraBusqueda) ) alert('Palabra introducida anteriormente');
+        if( listaPalabras.includes(palabraBusqueda) ){
+            alert('Palabra introducida anteriormente');
+            document.getElementById('mensaje').style = 'border-color: goldenrod;'
+        } 
         else if( diccionarioSet.has(palabraBusqueda)  ){
-            alert('ok');
             puntos = puntos + sumarPuntos(palabraBusqueda);
             listaPalabras.push(palabraBusqueda);
             letra = letraAleatoria();
-            document.getElementById('letra').innerHTML = "<h3>Escribe una letra que empiece por: " + letra +"</h3>";
-            totalTime = 10;
-        }
-        else alert("No está en el diccionario");
-
+            document.getElementById('letra').innerHTML =  "<h3>Escribe una letra que empiece por: " + letra.toUpperCase() +"</h3>" ;
+            tiempo = 10;
+            mensaje.style = 'border-color: green';
+            document.getElementById('tiempo').style = 'color: blue;'
+            document.getElementById('tiempo').innerHTML = tiempo;
+        } else document.getElementById('mensaje').style = 'border-color: red;'
         
     }
-    else alert('No válida');
+    else  document.getElementById('mensaje').style = 'border-color: red;'
 }
-
-
-document.getElementById("formulario").addEventListener("submit", (evento) =>//Se ejcuta cada vez que se envia el input
- {
-   evento.preventDefault();
-    console.log(evento);
-    let palabraBusqueda = document.getElementById("mensaje").value;//metemos la palabra en una variable
-    palabraBusqueda = palabraBusqueda.toLowerCase();
-    comprobarPalabras(palabraBusqueda);
-    document.getElementById("mensaje").value="";//borramos la palabra
-});
 
 function sumarPuntos(palabraBusqueda){
     let resul = 0;
@@ -103,3 +59,87 @@ function sumarPuntos(palabraBusqueda){
 
     return resul;
 }
+
+function empezar(){
+    juego.innerHTML = `
+            <span class="bg-light rounded-circle w-40 text-center" id="tiempo"></span>
+            <div class="container bg-light contenedor rounded">
+                <form class="form-label" id="formulario">
+                    <div id="letra"></div>
+                    <input type="text" class="form-control" id="mensaje">
+                    <br><br>
+                    <button class="btn btn-dark" type="submit">Aceptar</button>
+                    <br> <br>
+                </form>
+    
+                <div id="puntos"></div>
+            </div>
+            <ul id="listaPalabras">
+                <h3>Lista de palabras</h3>
+            </ul>
+
+    `;
+    const tiempoRestante = setInterval(()=>{
+        document.getElementById('tiempo').innerHTML = tiempo;
+        if(tiempo <= 0){
+            document.getElementById('formulario').innerHTML = "<h1 id='derrota'>Se acabó</h1>";
+            document.getElementById('puntos').innerHTML = "Puntuación: " + puntos;
+            document.getElementById('listaPalabras').style = 'display: flex';
+            listaPalabras.forEach( element =>{ document.getElementById('listaPalabras').innerHTML += '<li>'+element+'</li>'; })
+            if(puntos > localStorage.getItem(usuario)) localStorage.setItem(usuario,puntos);
+            cajaUsuario.innerHTML = usuario + ", puntuación máxima: " +localStorage.getItem(usuario) ;
+            reiniciar.style.display = "block";
+            clearTimeout(tiempoRestante);
+        }
+        if(tiempo <= 5) document.getElementById('tiempo').style = 'color: goldenrod;'
+        if(tiempo <= 2) document.getElementById('tiempo').style = 'color: red;'
+        if(tiempo>0) tiempo--;
+    },1000);
+    tiempo = 10;
+    puntos = 0;
+    document.getElementById('tiempo').innerHTML = tiempo;
+    juego.style.display = 'flex';
+    btnEmpezar.style.display = 'none';
+    reiniciar.style.display = 'none';
+    letra = letraAleatoria();
+
+    document.getElementById('letra').innerHTML = "<h3>Escribe una letra que empiece por: " + letra.toUpperCase() +"</h3>";
+
+    document.getElementById("formulario").addEventListener("submit", (event) => {
+        event.preventDefault();
+        let palabraBusqueda = document.getElementById("mensaje").value;
+        palabraBusqueda = palabraBusqueda.toLowerCase();
+        comprobarPalabras(palabraBusqueda);
+        document.getElementById("mensaje").value="";
+    });
+}
+
+document.getElementById("user").addEventListener("submit", (event) => {
+    event.preventDefault();
+    usuario = document.getElementById('usuario').value;
+    if (usuario == "" || usuario.trim() == "" ) usuario = "Invitado";
+    if( localStorage.getItem(usuario) ){
+        cajaUsuario.innerHTML = usuario + ", puntuación máxima: " +localStorage.getItem(usuario) ;
+    } 
+    else{
+        alert('Nuevo usuario: ' + usuario);
+        localStorage.setItem(usuario,0);
+        cajaUsuario.innerHTML = usuario + ", puntuación máxima: " +localStorage.getItem(usuario) ;
+    } 
+});
+
+const diccionarioSinTildes = diccionario.map(eliminarDiacriticosEs);
+const diccionarioSet = new Set(diccionarioSinTildes);
+
+let tiempo;
+let usuario = "";
+let listaPalabras = [];
+let letra = '';
+let puntos;
+const juego = document.getElementById('juego');
+const btnEmpezar = document.getElementById('empezar');
+const cajaUsuario = document.getElementById('user');
+
+btnEmpezar.addEventListener('click',empezar);
+reiniciar.addEventListener('click',empezar);
+
