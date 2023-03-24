@@ -25,7 +25,6 @@ function comprobarPalabras(palabraBusqueda) {
         acertadas++;
         mensaje.style = 'border-color: green';
         listaPalabras.push(palabraBusqueda);
-        letra = letraAleatoria();
         document.getElementById('letra').innerHTML = "<h3>Escribe una palabra que empiece por: " + letra +"</h3>";
         tiempo = 10;
         document.getElementById('tiempo').style = 'color: blue;'
@@ -41,7 +40,7 @@ function empezar(){
     btnEmpezar.style.display = 'none';
     letra = letraAleatoria();
 
-    document.getElementById('letra').innerHTML = "<h3>Escribe una letra que empiece por: " + letra +"</h3>";
+    document.getElementById('letra').innerHTML = "<h3>Escribe una palabra que empiece por: " + letra +"</h3>";
 
     document.getElementById("formulario").addEventListener("submit", (event) => {
         event.preventDefault();
