@@ -38,6 +38,16 @@ function comprobarPalabras(palabraBusqueda) {
     else  document.getElementById('mensaje').style = 'border-color: red;'
 }
 
+function contarLetra(palabra,letra) {
+    let contador = 0;
+    for (let i = 0; i < palabra.length; i++) {
+      if (palabra[i] === letra) {
+        contador++;
+      }
+    }
+    return contador;
+}
+
 function sumarPuntos(palabraBusqueda){
     let resul = 0;
     let p = palabraBusqueda[0];
@@ -47,7 +57,7 @@ function sumarPuntos(palabraBusqueda){
     else if ( p == 'm' || p == 'p'|| p == 'r' || p == 's' || p == 't') resul = 2;
     else if ( p == 'b' || p == 'f'|| p == 'g' || p == 'h' || p == 'i' || p == 'v') resul = 3;
     else if ( p == 'j' || p == 'l'|| p == 'n' || p == 'o' || p == 'z' ) resul = 4;
-    else if ( p == 'k' || p == 'ñ'|| p == 'g' || p == 'q' || p == 'u' || p == 'w' || p == 'y') resul = 5;
+    else if ( p == 'k' || p == 'ñ'|| p == 'x' || p == 'q' || p == 'u' || p == 'w' || p == 'y') resul = 5;
     
     //Puntuación por longitud de palabra
     let largo = palabraBusqueda.length;
@@ -56,6 +66,11 @@ function sumarPuntos(palabraBusqueda){
     else if ( largo == 5 || largo == 15 ) resul = resul + 3;
     else if ( largo == 4 || largo == 16 || largo == 17 ) resul = resul + 4;
     else if ( largo == 1 || largo == 2 || largo == 3 || largo == 18 || largo > 18 ) resul = resul + 5;
+
+    //Puntuación por letras adicionales K, Ñ, Q, W, X e Y en la palabra
+    resul = resul + contarLetra(palabraBusqueda,"k") + contarLetra(palabraBusqueda,"ñ") + contarLetra(palabraBusqueda,"q") + contarLetra(palabraBusqueda,"w") +
+        contarLetra(palabraBusqueda,"x") + contarLetra(palabraBusqueda,"y");
+
 
     return resul;
 }
@@ -86,8 +101,12 @@ function empezar(){
             document.getElementById('puntos').innerHTML = "Puntuación: " + puntos;
             document.getElementById('listaPalabras').style = 'display: flex';
             listaPalabras.forEach( element =>{ document.getElementById('listaPalabras').innerHTML += '<li>'+element+'</li>'; })
-            if(puntos > localStorage.getItem(usuario)) localStorage.setItem(usuario,puntos);
-            cajaUsuario.innerHTML = usuario + ", puntuación máxima: " +localStorage.getItem(usuario) ;
+            datos.partidas++;
+            if(puntos > datos.puntuacionMaxima){
+                datos.puntuacionMaxima = puntos;
+                localStorage.setItem(usuario,JSON.stringify(datos));
+            } 
+            cajaUsuario.innerHTML = "<h3>" + usuario + "</h3>" + "<br> Puntuación máxima: " + datos.puntuacionMaxima + "<br> Partidas: " + datos.partidas;
             reiniciar.style.display = "block";
             clearTimeout(tiempoRestante);
         }
@@ -119,12 +138,15 @@ document.getElementById("user").addEventListener("submit", (event) => {
     usuario = document.getElementById('usuario').value;
     if (usuario == "" || usuario.trim() == "" ) usuario = "Invitado";
     if( localStorage.getItem(usuario) ){
-        cajaUsuario.innerHTML = usuario + ", puntuación máxima: " +localStorage.getItem(usuario) ;
+        datos = JSON.parse(localStorage.getItem(usuario));
+        cajaUsuario.innerHTML = "<h3>" + usuario + "</h3>" + "<br> Puntuación máxima: " + datos.puntuacionMaxima + "<br> Partidas: " + datos.partidas;
     } 
     else{
         alert('Nuevo usuario: ' + usuario);
-        localStorage.setItem(usuario,0);
-        cajaUsuario.innerHTML = usuario + ", puntuación máxima: " +localStorage.getItem(usuario) ;
+        datos.puntuacionMaxima = 0;
+        datos.partidas = 0;
+        localStorage.setItem(usuario,JSON.stringify(datos));
+        cajaUsuario.innerHTML = "<h3>" + usuario + "</h3>" + "<br> Puntuación máxima: " + datos.puntuacionMaxima + "<br> Partidas: " + datos.partidas;
     } 
 });
 
@@ -136,6 +158,10 @@ let usuario = "";
 let listaPalabras = [];
 let letra = '';
 let puntos;
+let datos = {
+    puntuacionMaxima : 0,
+    partidas : 0
+};
 const juego = document.getElementById('juego');
 const btnEmpezar = document.getElementById('empezar');
 const cajaUsuario = document.getElementById('user');
