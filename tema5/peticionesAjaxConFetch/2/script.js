@@ -1,62 +1,62 @@
-const tabla = document.getElementById('tabla');
-let usuarios = [];
-function verUsuarios(){
-    fetch('https://jsonplaceholder.typicode.com/users')
-    .then(res => res.json())
-    .then(data => {
-        let html = `
-            <thead>
-                <tr>
-                <th scope="col">Name</th>
-                <th scope="col">UserName</th>
-                <th scope="col">Website</th>
-                </tr>
-            </thead>
-            <tbody id="cuerpo"></tbody>
-        `;
-        tabla.innerHTML = html;
-        let contenido = '';
-        data.forEach(usuario => {
-                usuarios.push(usuario);
-                contenido += `
-                <tr>
-                    <td>${usuario.name}</td>
-                    <td>${usuario.username}</td>
-                    <td>${usuario.website}</td>
-                    <td><button class="btn btn-secondary" onclick="verTareas(${usuario.id})" >Ver tareas</button></td>
-                </tr>
+// Función para obtener la lista de usuarios
+function getUsuarios() {
+fetch('https://jsonplaceholder.typicode.com/users')
+    .then(respuesta => respuesta.json())
+    .then(usuarios => {
+        let salida = '<h2>Lista de usuarios</h2>';
+        usuarios.forEach(user => {
+            salida += `
+            <ul>
+                <li>Nombre: ${user.name}</li>
+                <li>Usuario: ${user.username}</li>
+                <li>Sitio web: ${user.website}</li>
+                <button onclick="getTareas(${user.id})">Ver tareas</button>
+            </ul>
             `;
-            cuerpo.innerHTML = contenido;
-        })
+        });
+        document.getElementById('App').innerHTML = salida;
     });
 }
 
-function verTareas(idUsuario){
-    fetch('https://jsonplaceholder.typicode.com/users/'+idUsuario+'/todos')
-    .then(res => res.json())
-    .then(data => {
-        let html = `
-            <thead>
-                <tr>
-                <th scope="col">PostTitle</th>
-                <th scope="col"><button class="btn btn-primary" onclick="verUsuarios()" >Volver</button></th>
-                </tr>
-            </thead>
-            <tbody id="cuerpo"></tbody>
-        `;
-        tabla.innerHTML = html;
-        let contenido = '';
-        data.forEach(post => {
-            contenido += `
-                <tr>
-                    <td>${post.title}</td>
-                    <td><button class="btn btn-secondary" onclick="verPost(${post.id})" >Ver post</button></td>
-                </tr>
+// Función para obtener las tareas de un usuario
+function getTareas(userId) {
+fetch(`https://jsonplaceholder.typicode.com/users/${userId}/todos`)
+    .then(respuesta => respuesta.json())
+    .then(tareas => {
+        let salida = '<h2>Lista de tareas</h2>';
+        let pendientes = [];
+        let completadas = [];
+        
+        tareas.forEach(tarea => {
+            if (tarea.completed) {
+            completadas.push(tarea);
+            } else {
+            pendientes.push(tarea);
+            }
+        });
+        
+        salida += '<h3>Tareas pendientes</h3>';
+        pendientes.forEach(tarea => {
+            salida += `
+            <ul>
+                <li>${tarea.title}</li>
+            </ul>
             `;
-            cuerpo.innerHTML = contenido;
-        })
+        });
+        
+        salida += '<h3>Tareas completadas</h3>';
+        completadas.forEach(tarea => {
+            salida += `
+            <ul>
+                <li>${tarea.title}</li>
+            </ul>
+            `;
+        });
+        
+        salida += '<button onclick="getUsuarios()">Volver a la lista de usuarios</button>';
+        document.getElementById('App').innerHTML = salida;
     });
 }
 
-
-verUsuarios();
+// Llamamos a la función para obtener la lista de usuarios al cargar la página
+window.onload = getUsuarios;

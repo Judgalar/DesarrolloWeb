@@ -1,5 +1,6 @@
 const tabla = document.getElementById('tabla');
 let usuarios = [];
+
 function verUsuarios(){
     fetch('https://jsonplaceholder.typicode.com/users')
     .then(res => res.json())
@@ -23,7 +24,7 @@ function verUsuarios(){
                     <td>${usuario.name}</td>
                     <td>${usuario.username}</td>
                     <td>${usuario.website}</td>
-                    <td><button class="btn btn-secondary" onclick="verPosts(${usuario.id})" >Ver posts</button></td>
+                    <td><button class="btn btn-secondary" onclick="verPosts(${usuario.id},'${usuario.username}')" >Ver posts</button></td>
                 </tr>
             `;
             cuerpo.innerHTML = contenido;
@@ -31,7 +32,7 @@ function verUsuarios(){
     });
 }
 
-function verPosts(idUsuario){
+function verPosts(idUsuario,username){
     fetch('https://jsonplaceholder.typicode.com/users/'+idUsuario+'/posts')
     .then(res => res.json())
     .then(data => {
@@ -50,7 +51,7 @@ function verPosts(idUsuario){
             contenido += `
                 <tr>
                     <td>${post.title}</td>
-                    <td><button class="btn btn-secondary" onclick="verPost(${post.id})" >Ver post</button></td>
+                    <td><button class="btn btn-secondary" onclick="verPost(${post.id},'${username}')" >Ver post</button></td>
                 </tr>
             `;
             cuerpo.innerHTML = contenido;
@@ -58,33 +59,42 @@ function verPosts(idUsuario){
     });
 }
 
-function verPost(idPost){
-    fetch('https://jsonplaceholder.typicode.com/users/'+idUsuario+'/posts')
+function verPost(idPost,username){
+    fetch(`https://jsonplaceholder.typicode.com/posts/${idPost}`)
     .then(res => res.json())
-    .then(data => {
+    .then(post => {
         let html = `
             <thead>
                 <tr>
-                <th scope="col">Username</th>
-                <th scope="col">PostTitle</th>
-                <th scope="col">PostBody</th>
-                <th scope="col"><button class="btn btn-primary" onclick="verUsuarios()" >Volver</button></th>
+                    <th scope="col">Username</th>
+                    <th scope="col">PostTitle</th>
+                    <th scope="col">PostBody</th>
+                    <th scope="col"><button class="btn btn-primary" onclick="verUsuarios()" >Volver</button></th>
                 </tr>
             </thead>
             <tbody id="cuerpo"></tbody>
         `;
         tabla.innerHTML = html;
-        let contenido = '';
-        data.forEach(post => {
-            contenido += `
+        let contenido = `
                 <tr>
-                    <td>${post.title}</td>
-                    <td><button class="btn btn-secondary" onclick="verPost(${post.id})" >Ver post</button></td>
+                    <td>${username}</td>
+                    <td><h5>${post.title}</h5></td>
+                    <td>${post.body}</td>
                 </tr>
             `;
-            cuerpo.innerHTML = contenido;
+        cuerpo.innerHTML = contenido;
+
+        fetch(`https://jsonplaceholder.typicode.com/posts/${idPost}/comments`)
+        .then(res => res.json())
+        .then(comentarios => {
+            let html = '<br><h1 style="color:green">Comentarios</h1><br><br>';
+            comentarios.forEach( comentario => {
+                html += `<h3>${comentario.name}</h3><br><p>${comentario.body}</p>`
+            })
+            cuerpo.innerHTML += html;
         })
     });
+
 }
 
 verUsuarios();
