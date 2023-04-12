@@ -1,5 +1,4 @@
 const tabla = document.getElementById('tabla');
-let usuarios = [];
 
 function verUsuarios(){
     fetch('https://jsonplaceholder.typicode.com/users')
@@ -18,7 +17,6 @@ function verUsuarios(){
         tabla.innerHTML = html;
         let contenido = '';
         data.forEach(usuario => {
-                usuarios.push(usuario);
                 contenido += `
                 <tr>
                     <td>${usuario.name}</td>
