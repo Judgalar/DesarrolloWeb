@@ -1,0 +1,29 @@
+body{
+    margin: 0;
+    width: 100%;
+    color-scheme: dark;
+    background-color: #242424;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+}
+#contenedor{
+    margin: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.elemento{
+    background-color: aliceblue;
+    min-width: 280px;
+    min-height: 120px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
