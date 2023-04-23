@@ -1,0 +1,22 @@
+.crearUsuario{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+.crearUsuario input{
+    font-size: 30px;
+    border-radius: 10px;
+    border: none;
+}
+.crearUsuario select{
+    font-size: 30px;
+    border-radius: 10px;
+}
+
+.crearUsuario button{
+    font-size: 30px;
+    padding: 30px;
+    background-color: chartreuse;
+    border: none;
+    border-radius: 20px;
+}
