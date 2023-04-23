@@ -24,7 +24,7 @@ function ListaUsuarios () {
             setUsuarios(usuarios);
         } catch (error) {
             console.error(error);
-            location.reload();
+            window.location.reload();
         }
     }
 
