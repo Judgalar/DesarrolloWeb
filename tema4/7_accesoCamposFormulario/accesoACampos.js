@@ -1,4 +1,4 @@
-document.body.addEventListener('click', function (event) {
+botonera.addEventListener('click', function (event) {
     // Verificar si el elemento es un submit o un button
     if (event.target.matches('[type="submit"], [type="button"]')) {
         event.preventDefault();
